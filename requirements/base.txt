@@ -1,0 +1,49 @@
+# Wheel 0.25+ needed to install certain packages on CPython 3.5+
+# like Pillow and psycopg2
+# See http://bitly.com/wheel-building-fails-CPython-35
+# Verified bug on Python 3.5.1
+wheel
+
+# Django
+Django
+
+# Configuration
+django-environ
+
+# Database Postgres Adapter
+psycopg2>=2.7,<2.8 --no-binary psycopg2
+
+# Password storage
+argon2-cffi
+
+# Celery
+celery
+django-celery-results
+
+# Django Rest Framework
+coreapi
+Markdown
+djangorestframework
+djangorestframework-jwt
+
+#Django auth
+django-allauth
+
+# Forms
+django-crispy-forms
+
+# Time zones support
+pytz
+
+# Redis support
+django-redis
+redis
+
+# String case formating
+stringcase
+
+# CORS
+django-cors-headers
+
+# Django Swagger and OpenAPI
+drf-yasg
