@@ -72,12 +72,12 @@ THIRD_PARTY_APPS = [
     'django_celery_results',  # https://django-celery-results.readthedocs.io/en/latest/
     'rest_framework',  # http://www.django-rest-framework.org/
     'drf_yasg',  # https://drf-yasg.readthedocs.io/
-    'allauth',  # https://github.com/pennersr/django-allauth
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.vk',
+    # 'allauth',  # https://github.com/pennersr/django-allauth
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.vk',
 ]
 
 # Apps specific for this project go here.
