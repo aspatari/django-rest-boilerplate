@@ -17,8 +17,9 @@ import environ
 # Project ROOT Directory (apps/config/settings/base.py - 3 = apps/)
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('apps')
+{% if cookiecutter.database_provider == "SQLite" %}
 DATABASE_FILE_NAME = ROOT_DIR.path('db.sqlite3')
-
+{% endif %}
 # ENVIRON CONFIGURATION
 # ------------------------------------------------------------------------------
 # Load operating system environment variables and then prepare to use them
@@ -72,12 +73,6 @@ THIRD_PARTY_APPS = [
     'django_celery_results',  # https://django-celery-results.readthedocs.io/en/latest/
     'rest_framework',  # http://www.django-rest-framework.org/
     'drf_yasg',  # https://drf-yasg.readthedocs.io/
-    # 'allauth',  # https://github.com/pennersr/django-allauth
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.vk',
 ]
 
 # Apps specific for this project go here.
@@ -112,7 +107,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
-    ("""Artur Spatari""", 'artemir0106@gmail.com'),
+    ("""{{cookiecutter.author_name}}""", '{{cookiecutter.email}}'),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -133,13 +128,35 @@ FIXTURE_DIRS = (
 
 DATABASES = {
     'default': {
-        'ENGINE'         : 'django.db.backends.postgresql',
-        'NAME'           : env.str('DJANGO_DATABASE_NAME', default='apps'),
-        'USER'           : env.str('DJANGO_DATABASE_USER', default='postgres'),
-        'PASSWORD'       : env.str('DJANGO_DATABASE_PASSWORD'),
-        'HOST'           : env.str('DJANGO_DATABASE_HOST', default='localhost'),
-        'PORT'           : env.str('DJANGO_DATABASE_PORT', default='5432'),
+{% if cookiecutter.database_provider == "PostgreSQL" %}
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('DJANGO_DATABASE_NAME', default='{{cookiecutter.project_slug}}'),
+        'USER': env.str('DJANGO_DATABASE_USER', default='postgres'),
+        'PASSWORD': env.str('DJANGO_DATABASE_PASSWORD'),
+        'HOST': env.str('DJANGO_DATABASE_HOST', default='localhost'),
+        'PORT': env.str('DJANGO_DATABASE_PORT', default='5432'),
         'ATOMIC_REQUESTS': True,
+{% elif cookiecutter.database_provider == "SQLite" %}
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(DATABASE_FILE_NAME),
+{% elif cookiecutter.database_provider == "MSSQL" %}
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': env.str('DJANGO_DATABASE_NAME', default='{{cookiecutter.project_slug}}'),
+        'USER': env.str('DJANGO_DATABASE_USER', default='sa'),
+        'PASSWORD': env.str('DJANGO_DATABASE_PASSWORD'),
+        'HOST': env.str('DJANGO_DATABASE_HOST', default='localhost'),
+        'PORT': env.str('DJANGO_DATABASE_PORT', default='1433'),
+        'ATOMIC_REQUESTS': True,
+{% elif cookiecutter.database_provider == "MySQL" %}
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env.str('DJANGO_DATABASE_NAME', default='{{cookiecutter.project_slug}}'),
+        'USER': env.str('DJANGO_DATABASE_USER', default='root'),
+        'PASSWORD': env.str('DJANGO_DATABASE_PASSWORD'),
+        'HOST': env.str('DJANGO_DATABASE_HOST', default='127.0.0.1'),
+        'PORT': env.str('DJANGO_DATABASE_PORT', default='3306'),
+        'ATOMIC_REQUESTS': True,
+        'AUTOCOMMIT': True,
+{% endif %}
     }
 }
 
@@ -168,7 +185,7 @@ PASSWORD_HASHERS = [
 # ------------------------------------------------------------------------------
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-TIME_ZONE = 'UTC'
+TIME_ZONE = '{{cookiecutter.timezone}}'
 
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
@@ -208,16 +225,16 @@ TEMPLATES = [
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        'DIRS'   : [
+        'DIRS': [
             str(APPS_DIR.path('templates')),
         ],
         # 'APP_DIRS': True,
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-            'debug'             : DEBUG,
+            'debug': DEBUG,
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
-            'loaders'           : [
+            'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
@@ -271,7 +288,7 @@ ROOT_URLCONF = 'config.urls'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Location of root django.contrib.admin URL, use {% url 'admin:index' %}
+# Location of root django.contrib.admin URL
 ADMIN_URL = 'admin'
 
 # region CELERY
@@ -293,7 +310,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES'    : [
+    'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ]
 
@@ -301,12 +318,12 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
 
-    'JWT_EXPIRATION_DELTA'        : datetime.timedelta(days=7),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
 
-    'JWT_ALLOW_REFRESH'           : True,
+    'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
 
-    'JWT_AUTH_HEADER_PREFIX'      : 'JWT',
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
 
 }
 # endregion

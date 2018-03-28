@@ -10,7 +10,7 @@ COPY requirements requirements
 
 RUN pip install --no-cache-dir -r requirements/${SETTINGS}.txt
 
-COPY . .
+COPY .. .
 RUN chown -R www-data:www-data .
 
 COPY supervisor.conf /etc/supervisor/conf.d/

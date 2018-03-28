@@ -10,8 +10,18 @@ Django
 # Configuration
 django-environ
 
-# Database Postgres Adapter
-psycopg2>=2.7,<2.8 --no-binary psycopg2
+
+# Database {{cookiecutter.database_provider}} Adapter
+{% if cookiecutter.database_provider == "PostgreSQL" %}
+psycopg2-binary
+
+{% elif cookiecutter.database_provider == "MSSQL" %}
+pyodbc
+django-pyodbc-azure
+
+{% elif cookiecutter.database_provider == "MySQL" %}
+mysqlclient
+{% endif %}
 
 # Password storage
 argon2-cffi

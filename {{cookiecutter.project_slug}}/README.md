@@ -1,3 +1,6 @@
+# Project {{cookiecutter.project_name}}
+
+
 # Environment Variables
 - DJANGO_EXECUTION_ENVIRONMENT
     - Django Environment can be [production, development, test]
@@ -52,7 +55,7 @@ If Transaction is expired it will raise `ExpiredTransaction` exception
 - Value is integer
 
 ### Action
-Actions class is needed to inherit `tbmarks.users.utils.GenericAction`
+Actions class is needed to inherit `apps.users.utils.GenericAction`
 Actions is a path to class it can be:
 - Full path to class
 - Class name from `action.py` from the same module
