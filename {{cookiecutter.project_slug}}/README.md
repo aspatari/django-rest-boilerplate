@@ -2,10 +2,13 @@
 
 
 # Environment Variables
+## Common
 - DJANGO_EXECUTION_ENVIRONMENT
     - Django Environment can be [production, development, test]
 - DJANGO_READ_DOT_ENV_FILE
     - If django will read .env file or not
+{% if cookiecutter.database_provider  in ["PostgreSQL", "MySQL", "MSSQL"] %}
+## Database
 - DJANGO_DATABASE_NAME
     - Database Name
     - default='boilerplate'
@@ -28,6 +31,8 @@
     - Email user login
 - DJANGO_EMAIL_HOST_PASSWORD
     - Email user password
+
+{% endif %}
 
 ## Transaction Module
 Transactions  contains  3 fields
