@@ -57,3 +57,11 @@ django-cors-headers
 
 # Django Swagger and OpenAPI
 drf-yasg
+
+
+# Pylint
+pylint-common
+pylint-django
+{% if cookiecutter.use_celery == "y" %}
+pylint-celery
+{% endif %}
