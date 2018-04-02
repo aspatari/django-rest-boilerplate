@@ -36,11 +36,6 @@ Markdown
 djangorestframework
 djangorestframework-jwt
 
-#Django auth
-django-allauth
-
-# Forms
-django-crispy-forms
 
 # Time zones support
 pytz
