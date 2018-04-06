@@ -44,9 +44,6 @@ pytz
 django-redis
 redis
 
-# String case formating
-stringcase
-
 # CORS
 django-cors-headers
 
