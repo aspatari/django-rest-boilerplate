@@ -70,7 +70,9 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'corsheaders',  # https://github.com/ottoyiu/django-cors-headers
+    {% if cookiecutter.user_celery == "y" %}
     'django_celery_results',  # https://django-celery-results.readthedocs.io/en/latest/
+    {% endif %}
     'rest_framework',  # http://www.django-rest-framework.org/
     'drf_yasg',  # https://drf-yasg.readthedocs.io/
 ]
@@ -291,6 +293,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Location of root django.contrib.admin URL
 ADMIN_URL = 'admin'
 
+{ % if cookiecutter.user_celery == "y" %}
+
 # region CELERY
 # CELERY CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -299,7 +303,7 @@ INSTALLED_APPS += ['apps.taskapp.celery.CeleryConfig']
 CELERY_BROKER_URL = env.str('DJANGO_CELERY_BROKER_URL', default='redis://localhost')
 CELERY_RESULT_BACKEND = 'django-db'
 # endregion
-
+{% endif %}
 # region DJANGO REST FRAMEWORK
 # DJANGO REST FRAMEWORK CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -307,7 +311,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'apps.users.authentication.CustomJWTAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [

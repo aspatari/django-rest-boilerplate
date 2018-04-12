@@ -8,12 +8,27 @@ Django = "*"
 pytz = "*"
 django-environ = "*"
 
-"psycopg2-binary" = "*"
 
 "argon2_cffi" = "*"
 
+
+# Database {{cookiecutter.database_provider}} Adapter
+{% if cookiecutter.database_provider == "PostgreSQL" %}
+psycopg2-binary
+
+{% elif cookiecutter.database_provider == "MSSQL" %}
+pyodbc
+django-pyodbc-azure
+
+{% elif cookiecutter.database_provider == "MySQL" %}
+mysqlclient
+{% endif %}
+
+{% if cookiecutter.use_celery == "y" %}
+# Celery
 celery = "*"
 django_celery_results = "*"
+{% endif %}
 
 
 coreapi = "*"

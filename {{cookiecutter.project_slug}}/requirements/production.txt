@@ -1,5 +1,0 @@
--r base.txt
-
-
-# uwsgi
-uwsgi
