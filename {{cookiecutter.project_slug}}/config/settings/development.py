@@ -51,7 +51,7 @@ CACHES = {
 # # ------------------------------------------------------------------------------
 # TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-{ % if cookiecutter.user_celery == "y" %}
+{ % if cookiecutter.use_celery == "y" %}
 
 # CELERY
 # ------------------------------------------------------------------------------

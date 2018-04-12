@@ -70,7 +70,7 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     'corsheaders',  # https://github.com/ottoyiu/django-cors-headers
-    {% if cookiecutter.user_celery == "y" %}
+    {% if cookiecutter.use_celery == "y" %}
     'django_celery_results',  # https://django-celery-results.readthedocs.io/en/latest/
     {% endif %}
     'rest_framework',  # http://www.django-rest-framework.org/
@@ -293,7 +293,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Location of root django.contrib.admin URL
 ADMIN_URL = 'admin'
 
-{ % if cookiecutter.user_celery == "y" %}
+{% if cookiecutter.use_celery == "y" %}
 
 # region CELERY
 # CELERY CONFIGURATION
