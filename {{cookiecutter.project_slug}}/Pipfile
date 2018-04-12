@@ -7,30 +7,23 @@ name = "pypi"
 Django = "*"
 pytz = "*"
 django-environ = "*"
-
-
 "argon2_cffi" = "*"
-
-
 # Database {{cookiecutter.database_provider}} Adapter
 {% if cookiecutter.database_provider == "PostgreSQL" %}
 psycopg2-binary
-
 {% elif cookiecutter.database_provider == "MSSQL" %}
 pyodbc
 django-pyodbc-azure
-
 {% elif cookiecutter.database_provider == "MySQL" %}
 mysqlclient
 {% endif %}
-
 {% if cookiecutter.use_celery == "y" %}
 # Celery
 celery = "*"
 django_celery_results = "*"
 {% endif %}
 
-
+# RestFramework
 coreapi = "*"
 Markdown = "*"
 djangorestframework = "*"
@@ -38,10 +31,11 @@ djangorestframework-jwt = "*"
 django-cors-headers = "*"
 drf-yasg = "*"
 
-
+{% if cookiecutter.use_redis == "y" %}
+# Redis
 django-redis = "*"
 redis = "*"
-
+{% endif %}
 pylint-common = "*"
 pylint-django = "*"
 

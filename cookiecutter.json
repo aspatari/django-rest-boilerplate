@@ -13,6 +13,7 @@
   "timezone": "UTC",
   "use_docker": "n",
   "use_celery": "n",
+  "use_redis": "n",
   "use_mailhog": "n",
-  "use_sentry_for_error_reporting": "y"
+  "use_sentry": "y"
 }
