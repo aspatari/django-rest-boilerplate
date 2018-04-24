@@ -1,0 +1,16 @@
+session_name: {{ cookiecutter.project_slug}}
+start_directory: ./
+before_script: pipenv install --dev --skip-lock # ensure dev deps install
+shell_command_before:
+- '[ -d `pipenv --venv` ] && source `pipenv --venv`/bin/activate && reset'
+windows:
+- window_name: server
+  focus: true
+  panes:
+  - ./manage.py runserver_plus 0.0.0.0:8000
+- window_name: shell
+  panes:
+  - ./manage.py shell_plus
+- window_name: terminal
+  panes:
+  - ''%

@@ -46,5 +46,9 @@ django-debug-toolbar = "*"
 ipython = "*"
 django-silk = "*"
 
+# Query Counting
+django-querycount = "*"
+nplusone = "*"
+
 [requires]
-python_version = "3.6"
+python_full_version = "3.6.5"
