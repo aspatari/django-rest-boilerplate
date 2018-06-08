@@ -10,12 +10,12 @@ django-environ = "*"
 "argon2_cffi" = "*"
 # Database {{cookiecutter.database_provider}} Adapter
 {% if cookiecutter.database_provider == "PostgreSQL" %}
-psycopg2-binary
+psycopg2-binary = "*"
 {% elif cookiecutter.database_provider == "MSSQL" %}
-pyodbc
-django-pyodbc-azure
+pyodbc = "*"
+django-pyodbc-azure = "*"
 {% elif cookiecutter.database_provider == "MySQL" %}
-mysqlclient
+mysqlclient = "*"
 {% endif %}
 {% if cookiecutter.use_celery == "y" %}
 # Celery
@@ -46,4 +46,9 @@ django-debug-toolbar = "*"
 ipython = "*"
 django-silk = "*"
 
+# Query Counting
+django-querycount = "*"
+nplusone = "*"
+
 [requires]
+python_full_version = "3.6"
