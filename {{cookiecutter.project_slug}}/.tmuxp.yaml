@@ -7,10 +7,10 @@ windows:
 - window_name: server
   focus: true
   panes:
-  - ./manage.py runserver_plus 0.0.0.0:8000
+  - python manage.py runserver_plus 0.0.0.0:8000
 - window_name: shell
   panes:
-  - ./manage.py shell_plus
+  - python manage.py shell_plus
 - window_name: terminal
   panes:
-  - ''%
+  - ''
