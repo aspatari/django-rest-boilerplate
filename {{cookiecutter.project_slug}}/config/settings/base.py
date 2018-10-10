@@ -332,8 +332,19 @@ JWT_AUTH = {
 }
 # endregion
 
+# region TEMPLATED EMAIL CONFIGURATION
+# ------------------------------------------------------------------------------
+TEMPLATED_EMAIL_FILE_EXTENSION = "html"
+TEMPLATED_EMAIL_TEMPLATE_DIR = "emails/"
+
+CLIENT_HOST = env.str("CLIENT_HOST", default="http://localhost:8000")
+
+
+# region TRANSACTION ACTIONS CONFIGURATION
+# ------------------------------------------------------------------------------
 POST_REGISTRATION_CONFIRM_ACTION_VALID_TIME = {"days": 30}
 RESET_PASSWORD_ACTION_VALID_TIME = {"days": 30}
+# endregion
 
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = False

@@ -22,6 +22,7 @@ mysqlclient = "*"
 celery = "*"
 django_celery_results = "*"
 {% endif %}
+django-templated-email = "*"
 
 # RestFramework
 coreapi = "*"
