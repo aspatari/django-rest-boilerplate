@@ -15,5 +15,8 @@
   "use_celery": "n",
   "use_redis": "n",
   "use_mailhog": "n",
-  "use_sentry": "y"
+  "use_sentry": "y",
+  "_copy_without_render": [
+        "*.html"
+    ]
 }
