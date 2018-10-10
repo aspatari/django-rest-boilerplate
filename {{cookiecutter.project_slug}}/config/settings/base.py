@@ -149,6 +149,9 @@ DATABASES = {
         'HOST': env.str('DJANGO_DATABASE_HOST', default='localhost'),
         'PORT': env.str('DJANGO_DATABASE_PORT', default='1433'),
         'ATOMIC_REQUESTS': True,
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server'
+        }
 {% elif cookiecutter.database_provider == "MySQL" %}
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env.str('DJANGO_DATABASE_NAME', default='{{cookiecutter.project_slug}}'),
