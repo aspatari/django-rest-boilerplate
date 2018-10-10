@@ -70,7 +70,3 @@ SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True  # User must have permissions
 SILKY_PERMISSIONS = lambda user: user.is_staff
 # endregion
-
-
-POST_REGISTRATION_CONFIRM_ACTION_VALID_TIME = {"days": 30}
-RESET_PASSWORD_ACTION_VALID_TIME = {"days": 30}
