@@ -2,7 +2,7 @@
 
 ## Install
 ```
-$ cookiecutter https://github.com/aspatari/djang-rest-boilerplate
+$ cookiecutter https://github.com/aspatari/django-rest-boilerplate
 ```
 ```
 # pip install black
