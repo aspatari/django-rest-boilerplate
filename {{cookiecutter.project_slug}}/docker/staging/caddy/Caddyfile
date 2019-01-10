@@ -1,0 +1,5 @@
+0.0.0.0:80 {
+    proxy / django:8000 {
+        transparent
+    }
+}

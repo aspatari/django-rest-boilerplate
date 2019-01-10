@@ -1,4 +1,4 @@
-session_name: {{ cookiecutter.project_slug}}
+session_name: andys-amq-backend
 start_directory: ./
 before_script: pipenv install --dev --skip-lock # ensure dev deps install
 shell_command_before:
@@ -7,7 +7,7 @@ windows:
 - window_name: server
   focus: true
   panes:
-  - python manage.py runserver_plus 0.0.0.0:8000
+  - pipenv run start:dev
 - window_name: shell
   panes:
   - python manage.py shell_plus

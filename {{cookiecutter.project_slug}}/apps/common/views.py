@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 
 
-class CustomSerializerViewSet(ModelViewSet):
+class CustomSerializerViewSetMixin:
     custom_serializer_classes = {}
 
     def get_serializer_class(self):
@@ -9,10 +9,10 @@ class CustomSerializerViewSet(ModelViewSet):
         try:
             return self.custom_serializer_classes[self.action]
         except (KeyError, AttributeError):
-            return super(CustomSerializerViewSet, self).get_serializer_class()
+            return super().get_serializer_class()
 
 
-class CustomPermissionsViewSet(ModelViewSet):
+class CustomPermissionsViewSetMixin:
     custom_permission_classes = {}
 
     def get_permissions(self):
@@ -20,8 +20,8 @@ class CustomPermissionsViewSet(ModelViewSet):
         try:
             return [permission() for permission in self.custom_permission_classes[self.action]]
         except (KeyError, AttributeError):
-            return super(CustomPermissionsViewSet, self).get_permissions()
+            return super().get_permissions()
 
 
-class CustomViewSet(CustomPermissionsViewSet, CustomSerializerViewSet):
+class CustomViewSetMixin(CustomPermissionsViewSetMixin, CustomSerializerViewSetMixin):
     pass

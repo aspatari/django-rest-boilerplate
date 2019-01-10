@@ -1,0 +1,45 @@
+version: '3.1'
+
+
+services:
+  django:
+    build:
+      context: ../../
+      dockerfile: ./docker/staging/django/Dockerfile
+    environment:
+      DJANGO_DATABASE_PASSWORD: "example"
+      DJANGO_DATABASE_HOST: postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10.6
+    environment:
+      POSTGRES_PASSWORD: "example"
+      POSTGRES_PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "9999:5432"
+    volumes:
+      - production_postgres:/var/lib/postgresql/data
+
+  caddy:
+    build:
+      context: .
+      dockerfile: ./caddy/Dockerfile
+    depends_on:
+      - django
+    volumes:
+      - production_caddy:/root/.caddy
+    #    environment:
+    #      DOMAIN_NAME: andys-test.md
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:2015:2015"
+#
+#  redis:
+#    image: redis:3.2
+volumes:
+  production_postgres:
+  production_caddy:
+#  redis:

@@ -8,37 +8,29 @@ Django = "*"
 pytz = "*"
 django-environ = "*"
 "argon2_cffi" = "*"
-# Database {{cookiecutter.database_provider}} Adapter
-{% if cookiecutter.database_provider == "PostgreSQL" %}
+# Database PostgreSQL Adapter
 psycopg2-binary = "*"
-{% elif cookiecutter.database_provider == "MSSQL" %}
-pyodbc = "*"
-django-pyodbc-azure = "*"
-{% elif cookiecutter.database_provider == "MySQL" %}
-mysqlclient = "*"
-{% endif %}
-{% if cookiecutter.use_celery == "y" %}
 # Celery
 celery = "*"
 django_celery_results = "*"
-{% endif %}
 django-templated-email = "*"
-
 # RestFramework
 coreapi = "*"
 Markdown = "*"
 djangorestframework = "*"
-djangorestframework-jwt = "*"
+djangorestframework_simplejwt = "*"
 django-cors-headers = "*"
 drf-yasg = "*"
-
-{% if cookiecutter.use_redis == "y" %}
 # Redis
 django-redis = "*"
 redis = "*"
-{% endif %}
 pylint-common = "*"
 pylint-django = "*"
+questionnaire = "*"
+gunicorn = "*"
+django-modeltranslation = "*"
+django-ordered-model = "*"
+pillow = "*"
 
 [dev-packages]
 django-extensions = "*"
@@ -46,10 +38,13 @@ Werkzeug = "*"
 django-debug-toolbar = "*"
 ipython = "*"
 django-silk = "*"
-
 # Query Counting
 django-querycount = "*"
 nplusone = "*"
 
 [requires]
 python_full_version = "3.7"
+
+[scripts]
+"start:dev" = "python manage.py runserver_plus 0.0.0.0:8000 --setting=config.settings.development"
+"start:prod" = "python manage.py runserver 0.0.0.0:8000 --setting=config.settings.production"

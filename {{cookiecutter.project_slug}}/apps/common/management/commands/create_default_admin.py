@@ -10,15 +10,10 @@ class Command(BaseCommand):
         parser.add_argument(
             '--username',
             dest='username',
-            default='admin',
+            default='admin@admin.com',
             help='Admin username',
         )
-        parser.add_argument(
-            '--email',
-            dest='email',
-            default="admin@admin.com",
-            help='Admin email',
-        )
+
         parser.add_argument(
             '--password',
             dest='password',
@@ -29,12 +24,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         user = get_user_model()
         username = options.get('username')
-        email = options.get('email')
         password = options.get('password')
         msg = "Default User was created"
 
         try:
-            user.objects.create_superuser(username, email, password)
+            user.objects.create_superuser(username, password)
         except IntegrityError:
             msg = "User Already exists"
 

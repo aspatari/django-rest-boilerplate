@@ -1,0 +1,53 @@
+### Requirements for Project
+### $API_TOCKEN - API Tocket for a user with access to repository for read artifacts - by defoult ci-runenr
+####
+####ADD VARIABLES IN CI/CD VARIABLES
+#EXTERNAL_HTTP_PORT
+#EXTERNAL_HTTPS_PORT
+#image: docker:latest
+#services:
+#  - docker:dind
+stages:
+  - build
+  - deploy
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+
+build_django_staging:
+  stage: build
+  tags:
+    - docker
+  script:
+#    - cd docker/staging/django/
+    - ls -la
+    - docker build -f docker/staging/django/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:app .
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:app
+
+#build_postgres_staging:
+#  stage: build
+#  tags:
+#    - docker
+#  script:
+#    - cd docker/staging/postgres/
+#    - ls -la
+#    - docker build -f Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:postgres .
+#    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:postgres
+
+build_caddy_staging:
+  stage: build
+  tags:
+    - docker
+  script:
+    - cd docker/staging/
+    - ls -la
+    - docker build -f caddy/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:caddy .
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:caddy
+
+deploy_staging:
+  stage: deploy
+  tags:
+    - docker
+  script:
+    - ssh jenkins@ansible.starlab.local ansible-playbook -e "project_name=$CI_PROJECT_NAME" -e "project_namespace=$CI_PROJECT_NAMESPACE" -e "external_caddy_http_postgres_port=$EXTERNAL_HTTP_PORT" -e "external_caddy_https_postgres_port=$EXTERNAL_HTTPS_PORT" -e "image_tag=staging" --vault-id /home/jenkins/secret /etc/ansible/playbook/django_postgres_caddy.yml --user ansible
+  only:
+    - master
