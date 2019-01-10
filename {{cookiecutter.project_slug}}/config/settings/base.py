@@ -311,42 +311,34 @@ CELERY_RESULT_BACKEND = 'django-db'
 # DJANGO REST FRAMEWORK CONFIGURATION
 # ------------------------------------------------------------------------------
 REST_FRAMEWORK = {
-
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'apps.users.authentication.CustomJWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
-
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
 }
 
-JWT_AUTH = {
 
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
-
-    'JWT_AUTH_HEADER_PREFIX': 'JWT',
-
+SIMPLE_JWT = {
+    # "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    # "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    # "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    # "VERIFYING_KEY": None,
+    # "AUTH_HEADER_TYPES": ("Bearer",),
+    # "USER_ID_FIELD": "id",
+    # "USER_ID_CLAIM": "user_id",
+    "AUTH_TOKEN_CLASSES": (
+        "rest_framework_simplejwt.tokens.AccessToken",
+        "rest_framework_simplejwt.tokens.SlidingToken",
+    ),
+    # "TOKEN_TYPE_CLAIM": "token_type",
+    # "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": datetime.timedelta(days=30),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": datetime.timedelta(days=30),
 }
-# endregion
-
-# region TEMPLATED EMAIL CONFIGURATION
-# ------------------------------------------------------------------------------
-TEMPLATED_EMAIL_FILE_EXTENSION = "html"
-TEMPLATED_EMAIL_TEMPLATE_DIR = "emails/"
-
-CLIENT_HOST = env.str("CLIENT_HOST", default="http://localhost:8000")
-
-
-# region TRANSACTION ACTIONS CONFIGURATION
-# ------------------------------------------------------------------------------
-POST_REGISTRATION_CONFIRM_ACTION_VALID_TIME = {"days": 30}
-RESET_PASSWORD_ACTION_VALID_TIME = {"days": 30}
 # endregion
 
 AUTH_USER_MODEL = 'users.User'
